@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Profile | FAHIM</title>
+    
+    <!-- Google Fonts: 'Outfit' for a very modern, premium look -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome for Social Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* =========================================
+           CSS VARIABLES (COOL WHITE THEME)
+           ========================================= */
+        :root {
+            /* Ultra Premium Light Glass Settings */
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.8);
+            --glass-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+            
+            --text-main: #0f172a; /* Deep Slate Blue for professional contrast */
+            --text-muted: #64748b; /* Slate Gray */
+            
+            --accent-color: #0284c7; /* Professional Blue */
+            --status-online: #10b981;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            color: var(--text-main);
+            background-color: #e2e8f0; /* Cool gray base */
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+            overflow-x: hidden;
+            line-height: 1.6;
+            position: relative;
+        }
+
+        /* =========================================
+           AURORA ANIMATED BACKGROUND (COOL / TECH)
+           ========================================= */
+        .bg-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            overflow: hidden;
+            filter: blur(90px);
+            opacity: 0.6; /* Soften the colors for a clean look */
+        }
+
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            animation: moveShapes 20s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .shape-1 {
+            width: 550px;
+            height: 550px;
+            background: #60a5fa; /* Cool Tech Blue */
+            top: -10%;
+            left: -10%;
+        }
+
+        .shape-2 {
+            width: 650px;
+            height: 650px;
+            background: #34d399; /* Mint / Teal Green */
+            bottom: -20%;
+            right: -10%;
+            animation-delay: -5s;
+        }
+
+        .shape-3 {
+            width: 450px;
+            height: 450px;
+            background: #818cf8; /* Soft Indigo */
+            top: 40%;
+            left: 40%;
+            animation-delay: -10s;
+        }
+
+        @keyframes moveShapes {
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(120px, 100px) scale(1.1); }
+            100% { transform: translate(-80px, 80px) scale(0.9); }
+        }
+
+        /* =========================================
+           MAIN LAYOUT & ANIMATIONS
+           ========================================= */
+        .app-container {
+            width: 100%;
+            max-width: 850px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            animation: fadeUp 1s ease-out forwards;
+            padding-bottom: 40px;
+            z-index: 1;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+        }
+
+        /* =========================================
+           GLASS UI PANELS
+           ========================================= */
+        .glass-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid var(--glass-border);
+            border-radius: 30px;
+            box-shadow: var(--glass-shadow);
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* White inner highlight */
+        .glass-panel::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 1.5px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,1), transparent);
+            z-index: 10;
+        }
+
+        /* =========================================
+           HEADER / COVER & PROFILE SECTION
+           ========================================= */
+        .profile-header {
+            text-align: center;
+            padding-bottom: 35px;
+        }
+
+        .cover-photo-wrapper {
+            position: relative;
+            width: 100%;
+            height: 260px;
+            overflow: hidden;
+            background: #cbd5e1;
+        }
+
+        .cover-photo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s ease;
+        }
+
+        .cover-photo-wrapper::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 120px;
+            background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0.7) 100%);
+            pointer-events: none;
+        }
+
+        .profile-pic-container {
+            position: relative;
+            width: 160px;
+            height: 160px;
+            margin: -80px auto 20px;
+            z-index: 10;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .profile-pic {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 6px solid #ffffff;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            background: #fff;
+        }
+
+        .status-indicator {
+            position: absolute;
+            bottom: 12px;
+            right: 12px;
+            width: 22px;
+            height: 22px;
+            background-color: var(--status-online);
+            border-radius: 50%;
+            border: 4px solid #ffffff;
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.3);
+        }
+
+        .name-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 6px;
+        }
+
+        .name {
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: var(--text-main);
+        }
+
+        .verified-badge {
+            color: var(--accent-color);
+            font-size: 1.3rem;
+        }
+
+        .title {
+            font-size: 1.05rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            letter-spacing: 0.5px;
+        }
+
+        /* =========================================
+           ABOUT SECTION
+           ========================================= */
+        .about-section {
+            padding: 35px;
+            text-align: center;
+        }
+
+        .section-heading {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--text-main);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .section-heading::before, .section-heading::after {
+            content: '';
+            height: 1px;
+            width: 30px;
+            background: rgba(15, 23, 42, 0.15);
+        }
+
+        .about-text {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+            max-width: 650px;
+            margin: 0 auto;
+            font-weight: 400;
+        }
+
+        /* =========================================
+           SOCIAL CARDS SECTION
+           ========================================= */
+        .social-section {
+            padding: 35px;
+        }
+
+        .social-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 25px;
+        }
+
+        .social-card {
+            display: flex;
+            align-items: center;
+            padding: 16px 20px;
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            text-decoration: none;
+            color: var(--text-main);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .social-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.8), transparent);
+            transform: translateX(-100%);
+            transition: 0.6s;
+        }
+
+        .social-card:hover::before {
+            transform: translateX(100%);
+        }
+
+        .social-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        .social-card:active {
+            transform: scale(0.96);
+        }
+
+        .social-icon {
+            width: 55px;
+            height: 55px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            background: rgba(15, 23, 42, 0.04);
+            border: 1px solid rgba(15, 23, 42, 0.05);
+            border-radius: 16px;
+            margin-right: 16px;
+            transition: all 0.3s ease;
+            color: #475569;
+        }
+
+        .social-card:hover .social-icon {
+            transform: scale(1.1) rotate(5deg);
+            background: #ffffff;
+            border-color: #ffffff;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        /* Hover Colors for Light Theme */
+        .social-card.tiktok:hover .social-icon { color: #000; box-shadow: -2px -2px 0 rgba(0,242,254,0.3), 2px 2px 0 rgba(255,0,80,0.3); }
+        .social-card.facebook:hover .social-icon { color: #1877F2; }
+        .social-card.whatsapp:hover .social-icon { color: #25D366; }
+        .social-card.telegram:hover .social-icon { color: #0088cc; }
+
+        .social-info {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .social-platform {
+            font-size: 1.15rem;
+            font-weight: 600;
+        }
+
+        .social-action {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        .social-arrow {
+            font-size: 1.2rem;
+            color: #94a3b8;
+            transition: all 0.3s ease;
+        }
+
+        .social-card:hover .social-arrow {
+            color: var(--text-main);
+            transform: translateX(5px);
+        }
+
+        /* =========================================
+           FOOTER
+           ========================================= */
+        footer {
+            text-align: center;
+            margin-top: 10px;
+            padding: 20px;
+        }
+
+        .footer-dev {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-main);
+            margin-bottom: 6px;
+            letter-spacing: 1px;
+        }
+
+        .footer-copy {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        /* =========================================
+           RESPONSIVE DESIGN (MOBILE)
+           ========================================= */
+        @media (max-width: 600px) {
+            .app-container {
+                gap: 16px;
+                padding: 10px;
+            }
+            .glass-panel {
+                border-radius: 24px;
+            }
+            .cover-photo-wrapper {
+                height: 180px;
+            }
+            .profile-pic-container {
+                width: 130px;
+                height: 130px;
+                margin-top: -65px;
+            }
+            .name {
+                font-size: 1.8rem;
+            }
+            .about-section, .social-section {
+                padding: 25px 20px;
+            }
+            .social-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            .social-card {
+                padding: 14px 16px;
+            }
+            .social-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 1.4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- AURORA ANIMATED BACKGROUND (COOL / MASCULINE) -->
+    <div class="bg-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+    </div>
+
+    <div class="app-container">
+        
+        <!-- HEADER / PROFILE SECTION -->
+        <div class="glass-panel profile-header">
+            <div class="cover-photo-wrapper">
+                <img id="domCoverImg" src="" alt="Cover Photo" class="cover-photo" onerror="this.style.display='none'">
+            </div>
+            
+            <div class="profile-pic-container">
+                <img id="domProfileImg" src="" alt="Profile Picture" class="profile-pic" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNTAiIGhlaWdodD0iMTUwIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjFmNWY5Ii8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZpbGw9IiM2NDc0OGIiIGR5PSIuM2VtIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5ObyBJbWFnZTwvdGV4dD48L3N2Zz4='">
+                <div class="status-indicator" title="Online"></div>
+            </div>
+
+            <div class="name-wrapper">
+                <h1 class="name" id="domUserName">Loading...</h1>
+                <i class="fa-solid fa-circle-check verified-badge" title="Verified Profile"></i>
+            </div>
+            
+            <p class="title" id="domUserTitle">Loading...</p>
+        </div>
+
+        <!-- ABOUT SECTION -->
+        <div class="glass-panel about-section">
+            <h2 class="section-heading">About Me</h2>
+            <p class="about-text" id="domUserBio">Loading...</p>
+        </div>
+
+        <!-- SOCIAL LINKS SECTION -->
+        <div class="glass-panel social-section">
+            <h2 class="section-heading">Connect With Me</h2>
+            
+            <div class="social-grid">
+                
+                <!-- TikTok Card -->
+                <a href="#" target="_blank" rel="noopener noreferrer" class="social-card tiktok" id="domLinkTiktok">
+                    <div class="social-icon"><i class="fa-brands fa-tiktok"></i></div>
+                    <div class="social-info">
+                        <span class="social-platform">TikTok</span>
+                        <span class="social-action">Follow me</span>
+                    </div>
+                    <i class="fa-solid fa-arrow-right social-arrow"></i>
+                </a>
+
+                <!-- Facebook Card -->
+                <a href="#" target="_blank" rel="noopener noreferrer" class="social-card facebook" id="domLinkFacebook">
+                    <div class="social-icon"><i class="fa-brands fa-facebook-f"></i></div>
+                    <div class="social-info">
+                        <span class="social-platform">Facebook</span>
+                        <span class="social-action">Connect with me</span>
+                    </div>
+                    <i class="fa-solid fa-arrow-right social-arrow"></i>
+                </a>
+
+                <!-- WhatsApp Card -->
+                <a href="#" target="_blank" rel="noopener noreferrer" class="social-card whatsapp" id="domLinkWhatsapp">
+                    <div class="social-icon"><i class="fa-brands fa-whatsapp"></i></div>
+                    <div class="social-info">
+                        <span class="social-platform">WhatsApp</span>
+                        <span class="social-action">Message me</span>
+                    </div>
+                    <i class="fa-solid fa-arrow-right social-arrow"></i>
+                </a>
+
+                <!-- Telegram Card -->
+                <a href="#" target="_blank" rel="noopener noreferrer" class="social-card telegram" id="domLinkTelegram">
+                    <div class="social-icon"><i class="fa-brands fa-telegram"></i></div>
+                    <div class="social-info">
+                        <span class="social-platform">Telegram</span>
+                        <span class="social-action">Join / Message</span>
+                    </div>
+                    <i class="fa-solid fa-arrow-right social-arrow"></i>
+                </a>
+
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <footer>
+            <p class="footer-dev">Developer By Fahim</p>
+            <p class="footer-copy">© 2026 Fahim. All rights reserved.</p>
+        </footer>
+
+    </div>
+
+    <script>
+        // ===============================
+        // EASY EDIT SECTION
+        // ===============================
+        
+        // Add your image URLs here
+        // Using cool/tech placeholders from Unsplash
+        const PROFILE_IMAGE = "https://i.ibb.co.com/ZzkLrNK6/file-000000005e0081f8bcaa5af991871284.png"; 
+        const COVER_IMAGE = "https://i.ibb.co.com/3m5Xvpfg/file-00000000e51c820b96cc60391cf7bf7f.png"; // Beautiful modern tech/earth background
+        
+        // Edit your personal information
+        const USER_NAME = "FAHIM";
+        const USER_TITLE = "Digital Creator • Developer • Gamer • Mini Hecker";
+        const USER_BIO = "Hello! I'm Fahim. Welcome to my personal website. This is my digital space where you can learn more about me and connect with me on social media.";
+        
+        // Edit your social media links here
+        const TIKTOK_LINK = "https://www.tiktok.com/@fahim__rx7?_r=1&_t=ZS-98qhBEJkYHl";
+        const FACEBOOK_LINK = "https://www.facebook.com/share/1F711eZMDY/";
+        const WHATSAPP_LINK = "https://wa.me/qr/TNTKARBSJWG7G1";
+        const TELEGRAM_LINK = "https://t.me/fahim_rx7";
+
+        // ===============================
+        // LOGIC SECTION (DO NOT EDIT)
+        // ===============================
+        document.addEventListener("DOMContentLoaded", () => {
+            // Apply Images
+            const profileEl = document.getElementById("domProfileImg");
+            const coverEl = document.getElementById("domCoverImg");
+            
+            if(PROFILE_IMAGE) profileEl.src = PROFILE_IMAGE;
+            if(COVER_IMAGE) coverEl.src = COVER_IMAGE;
+            else coverEl.style.display = 'none';
+
+            // Apply Text Data
+            document.getElementById("domUserName").textContent = USER_NAME;
+            document.getElementById("domUserTitle").textContent = USER_TITLE;
+            document.getElementById("domUserBio").textContent = USER_BIO;
+
+            // Apply Links
+            const setLink = (id, url) => {
+                const el = document.getElementById(id);
+                if (url && url !== "") {
+                    el.href = url;
+                } else {
+                    el.href = "javascript:void(0)";
+                    el.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        alert("Link not configured yet!");
+                    });
+                }
+            };
+
+            setLink("domLinkTiktok", TIKTOK_LINK);
+            setLink("domLinkFacebook", FACEBOOK_LINK);
+            setLink("domLinkWhatsapp", WHATSAPP_LINK);
+            setLink("domLinkTelegram", TELEGRAM_LINK);
+
+            // Parallax effect for cover photo
+            window.addEventListener('scroll', () => {
+                const scrollPos = window.scrollY;
+                if(scrollPos < 300) {
+                    coverEl.style.transform = `translateY(${scrollPos * 0.4}px)`;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
